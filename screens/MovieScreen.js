@@ -35,7 +35,7 @@ const MovieScreen = () => {
 
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.push('FavoriteScreen')}>
-                            <HeartIcon size='30' color={isFavorite ? 'white' : 'red'} strokeWidth={2} color='white' />
+                            <HeartIcon size='30' color={isFavorite ? 'white' : 'red'} strokeWidth={2}  />
 
                         </TouchableOpacity>
 
