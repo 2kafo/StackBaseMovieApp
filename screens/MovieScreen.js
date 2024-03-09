@@ -34,7 +34,7 @@ const MovieScreen = () => {
                             <ChevronLeftIcon size='50' strokeWidth={2} color='white' />
 
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)}>
+                        <TouchableOpacity onPress={() => navigation.push('FavoriteScreen')}>
                             <HeartIcon size='30' color={isFavorite ? 'white' : 'red'} strokeWidth={2} color='white' />
 
                         </TouchableOpacity>
