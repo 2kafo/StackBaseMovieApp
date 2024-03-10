@@ -14,7 +14,7 @@ export default function SearchScreen() {
     return (
         <SafeAreaView className="bg-neutral-800 flex-1 -mb-2` : tw`-mb-3">
 
-            <View className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full">
+            <View className="m-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full">
                 <TextInput
                     placeholder='Search Movie'
                     placeholderTextColor={'lightgray'}

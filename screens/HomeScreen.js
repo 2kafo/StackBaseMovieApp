@@ -1,33 +1,58 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, ScrollView,StatusBar, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, StatusBar, Platform, TouchableOpacity } from 'react-native'
 import tw from 'twrnc';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import TrendingMovie from '../components/TrendingMovie';
 import MovieList from '../components/MovieList';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/Loading';
-import { fetchTrendingMovie } from '../api/movieDB';
+import { fetchTopRated, fetchTrendingMovie, fetchUpcoming } from '../api/movieDB';
 import axios from 'axios';
 
 
 
 export default function HomeScreen() {
-  const [trendingMovies, setTrendingMovies] = useState([1,2,3,4,5,6,])
-  const [upComing, setUpComing] = useState([1,2,3,4,5,6,])
-  const [topRated, setTopRated] = useState([1,2,3,4,5,6,])
+  const [trendingMovies, setTrendingMovies] = useState([])
+  const [upComing, setUpComing] = useState([])
+  const [topRated, setTopRated] = useState([])
   const navigation = useNavigation()
-  const [loading, setLoading] = useState()
+  const [loading, setLoading] = useState(true)
 
   const ios = Platform.OS == 'ios'
 
-  useEffect(()=>{
-    getTrendingMovie()
-  },[])
+  useEffect(() => {
+    getTrendingMovie();
+    getUpcomingMovie();
+    getTopratedMovie();
+  }, [])
 
-  const getTrendingMovie = async ()=>{
+  const getTrendingMovie = async () => {
     try {
       const data = await fetchTrendingMovie();
-      console.log("get the trending data", data);
+
+      if (data && data.results) setTrendingMovies(data.results);
+      setLoading(false)
+    } catch (error) {
+      console.error("Error fetching trending movie:", error);
+    }
+  }
+
+  const getUpcomingMovie = async () => {
+    try {
+      const data = await fetchUpcoming();
+      if (data && data.results) setUpComing(data.results);
+
+    } catch (error) {
+      console.error("Error fetching trending movie:", error);
+    }
+  }
+
+  const getTopratedMovie = async () => {
+    try {
+      const data = await fetchTopRated();
+       
+      if (data && data.results) setTopRated(data.results);
+
     } catch (error) {
       console.error("Error fetching trending movie:", error);
     }
@@ -38,34 +63,35 @@ export default function HomeScreen() {
       {/* Search and button */}
       <SafeAreaView style={ios ? tw`-mb-2` : tw`-mb-3`}>
         <StatusBar style="light" />
-        <View style={tw`flex-row justify-between items-center mx-4`}>
+        <View style={tw`flex-row justify-between items-center m-4`}>
           <Bars3CenterLeftIcon size='50' strokeWidth={2} color='white' />
           <Text style={tw`text-white text-3xl font-bold`}>
             Movies
 
           </Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('SearchScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
             <MagnifyingGlassIcon size='30' strokeWidth={2} color='white' />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
       {
-        loading?(
+        loading ? (
           <Loading />
-        ):(
+        ) : (
           <ScrollView
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 10 }}>
-          {/* trending moviee */}
-          <TrendingMovie data={trendingMovies} />
-          {/* Up coming movies */}
-          <MovieList title={'Up Coming ' } data={upComing}/>
-          {/* Up coming movies */}
-          <MovieList title={'Top Rated ' } data={upComing}/>
-        </ScrollView>
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 10 }}>
+            {/* trending moviee */}
+            <TrendingMovie data={trendingMovies} />
+
+            {/* Up coming movies */}
+            <MovieList title={'Up Coming '} data={upComing} />
+            {/* Up coming movies */}
+            <MovieList title={'Top Rated '} data={topRated} />
+          </ScrollView>
         )
       }
-     
+
     </View>
 
 
