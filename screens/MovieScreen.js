@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native';
 import { ChevronLeftIcon, MagnifyingGlassIcon, ChatBubbleLeftIcon, HeartIcon } from 'react-native-heroicons/outline';
 import { Image } from 'react-native';
-import { fetchMovieDetails, image342, image500 } from '../api/movieDB';
+import { fallback, fetchMovieDetails, image342, image500 } from '../api/movieDB';
 
 var { width, height } = Dimensions.get('window')
 
@@ -25,9 +25,11 @@ const MovieScreen = () => {
     const getMovieDetails = async (id) => {
         try {
             const data = await fetchMovieDetails(id);
-
+            // console.log(data)
             if (data) setMovie(data);
-            console.log(movie)
+            console.log(item.poster_path)
+            console.log(item)
+            
         } catch (error) {
             console.error("Error fetching trending movie:", error);
         }
@@ -61,7 +63,7 @@ const MovieScreen = () => {
                     <Image
                         // source={require('../assets/images/img2.webp')} 
 
-                        source={{ url: image342(movie.poster_path) }}
+                        source={{ url: image500(movie.poster_path || fallback) }}
 
                         style={{ width, height: height * 0.55 }}
                     />
@@ -75,11 +77,11 @@ const MovieScreen = () => {
             <View className=" space-y-3">
                 {/* titke */}
                 <Text className="text-white text-center text-3xl font-bold tracking-wider">
-                    {movie.title}
+                    {item.title}
                 </Text>
                 {/* titke */}
                 <Text className="text-neutral-400 font-semibold text-base text-center">
-                {movie.status}* {movie.release_date}
+                    {item.status}* {item.release_date}
                 </Text>
                 {/* genre */}
                 <View className="flex-row justify-center mx-4 space-x-2">
@@ -88,15 +90,15 @@ const MovieScreen = () => {
                         Know More in Community
                     </Text>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.push('OpenAIChat')}
+                    >
                         <ChatBubbleLeftIcon size='30' strokeWidth={2} color='white' />
                     </TouchableOpacity>
                 </View>
                 {/* Decription */}
                 <Text className="text-neutral-400 mx-4 tracking-wide">
-                    Husika na kichwa cha habari hapo juu . Mimi Tumaini Peter Kafonogo , Afisa tabibu
-                    mwenye lesseni yenye usajili namba MCTER 17342  Niliemaliza masomo yangu kwenye chuo cha afya shirikishi cha City collage kilichopo kigamboni
-
+                   {item.overview}
                 </Text>
 
             </View>

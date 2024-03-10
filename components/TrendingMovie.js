@@ -3,7 +3,7 @@ import tw from 'twrnc';
 import { View, Text, TouchableWithoutFeedback, Dimensions, Image } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
-import { image500 } from '../api/movieDB';
+import { fallback, image500 } from '../api/movieDB';
 
 
 var { width, height } = Dimensions.get('window')
@@ -35,7 +35,7 @@ const MovieCard = ({ item, handleClick }) => {
     <TouchableWithoutFeedback onPress={()=> handleClick(item)}>
       <Image 
         // source={require('../assets/images/img1.webp')}
-        source={{uri: image500(item.poster_path)}}
+        source={{uri: image500(item.poster_path || fallback)}}
         style={{
           width:width*0.6,
           height:height*0.4

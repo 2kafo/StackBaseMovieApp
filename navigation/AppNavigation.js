@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import MovieScreen from '../screens/MovieScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
 import SearchScreen from '../screens/SearchScreen';
+import OpenAIChat from '../screens/OpenAIChat';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -32,9 +34,14 @@ export default function AppNavigation() {
           options={{
             headerShown: false
           }} />
-      <Stack.Screen name='SearchScreen' component={SearchScreen} options={{
-        headerShown: false
-      }} />
+        <Stack.Screen name='SearchScreen' component={SearchScreen} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name='OpenAIChat' component={OpenAIChat} options={{
+          headerShown: false
+        }} />
+        
+        
       </Stack.Navigator>
 
 
