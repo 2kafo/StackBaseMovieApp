@@ -87,11 +87,11 @@ const MovieScreen = () => {
                 <View className="flex-row justify-center mx-4 space-x-2">
 
                     <Text className="text-neutral-400 font-semibold text-base text-center">
-                        Know More in Community
+                        Ask AI
                     </Text>
 
                     <TouchableOpacity
-                        onPress={() => navigation.push('OpenAIChat')}
+                        // onPress={() => navigation.push('OpenAIChat')}
                     >
                         <ChatBubbleLeftIcon size='30' strokeWidth={2} color='white' />
                     </TouchableOpacity>
